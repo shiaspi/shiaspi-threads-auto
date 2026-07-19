@@ -1,0 +1,15 @@
+# 機密情報・アクセストークンは絶対にコミットしない
+token.txt
+*token*.txt
+.env
+.env.*
+
+# 投稿ログ（GitHub Actionsの実行ログのみで管理する方針のためコミット対象外）
+post_log.txt
+
+# OS/エディタ生成物
+.DS_Store
+Thumbs.db
+
+# Claudeセッションのロックファイル
+.claude/scheduled_tasks.lock

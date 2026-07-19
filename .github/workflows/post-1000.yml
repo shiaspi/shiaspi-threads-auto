@@ -1,0 +1,33 @@
+name: "Threads Post 10:00 JST"
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: threads-post-1000
+  cancel-in-progress: false
+
+env:
+  # ドライラン期間中は "true"。切り替え完了時にこの行を "false" に変更してpushする。
+  DRY_RUN: "true"
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Post queue/1000.txt
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+        run: bash scripts/post.sh queue/1000.txt
+
+      - name: Post queue2/1000.txt
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+        run: bash scripts/post.sh queue2/1000.txt

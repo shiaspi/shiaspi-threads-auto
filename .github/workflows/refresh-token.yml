@@ -1,0 +1,21 @@
+name: "Threads Token Refresh"
+
+on:
+  schedule:
+    # 毎週月曜 3:00 JST (= 前日 18:00 UTC) に実行。長期トークンは60日で失効するため定期延長する。
+    - cron: "0 18 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh Threads long-lived token
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+        run: bash scripts/refresh_token.sh
