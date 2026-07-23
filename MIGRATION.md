@@ -75,3 +75,14 @@ schtasks /change /tn "ThreadsPost2_0200" /enable
 - `C:\Users\megme\.threads\queue` `queue2` のローカルコピーも当面は残す
 - 動作が安定してから（目安1〜2週間）、PC側タスクの削除やローカルフォルダの整理を検討する
 - 以降、`/threads-refresh` での投稿文編集は **このリポジトリの `queue/` `queue2/`** に対してのみ行えばよい（PC側への手動反映は不要になる）
+
+---
+
+## テスト投稿をする場合の注意
+
+トークンの疎通確認や動作確認のために実際にThreadsへテスト投稿することがあるが、その際は以下を必ず守る。
+
+- 本番の `queue/` `queue2/` 配下のファイルは使わず、内容に「【テスト投稿】」など一目でテストと分かる文言を入れた別ファイルを使うこと
+- **Threads APIには投稿削除の権限がない**（現在のトークン／アプリ権限では `DELETE /v1.0/{media-id}` を叩くと `code:10 Application does not have permission for this action` で拒否される。2026-07-23確認）。API経由でテスト投稿を消すことはできない
+- そのため、テスト投稿をしたら**投稿直後に必ずThreadsアプリから手動で削除する**こと（放置しない）
+- 投稿IDは `post_log.txt` に `OK file=... publish={"id":"..."}` の形式で残るので、削除対象を探す手がかりにする
