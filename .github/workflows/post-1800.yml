@@ -14,7 +14,7 @@ concurrency:
 
 env:
   # ドライラン期間中は "true"。切り替え完了時にこの行を "false" に変更してpushする。
-  DRY_RUN: "true"
+  DRY_RUN: "false"
 
 jobs:
   post:
